@@ -15,7 +15,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 20vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,6 +25,7 @@
 }
 
 .App-link {
+  background-color: #282c34;
   color: #61dafb;
 }
 
@@ -36,11 +37,25 @@
     transform: rotate(360deg);
   }
 }
-
-label.block{
-  margin-right: auto;
+.login{
+  width: 50%;
+  height: 20%;
+  align-items: center;
+  justify-content: center;
+  color: white;
   margin-left: auto;
+  margin-right: auto;
 }
-input{
-  text-align: center;
+
+input[type = "submit"] {
+  margin: 0 auto;
+  display: block;
+}
+
+.whole{
+  display: block;
+  background-color: #282c34;
+  color: white;
+  width: auto;
+  padding-bottom:100%;
 }

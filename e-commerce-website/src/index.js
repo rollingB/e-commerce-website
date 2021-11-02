@@ -5,7 +5,7 @@ import Loginpage from './loginpage';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-        Loginpage(),
+        <Loginpage/>,
     document.getElementById('root')
 );
 
