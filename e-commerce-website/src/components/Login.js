@@ -3,15 +3,16 @@ import React, {useState} from "react";
 import axios from "axios";
 import bcrypt from "bcryptjs";
 import {Form, Button, Container, Col, Row} from "react-bootstrap";
+import AddToCart from "./AddToCart";
 
+const UserContext = React.createContext('')
 
-
-function Login(){
+function Login(props){
     const[email,setEmail] = useState('')
     const[password,setPassword]=useState('');
+    const[userid,setUserid]=useState('')
 
 
-    const Mycontext = React.createContext('')
 
     function handleSubmit(e) {
             axios.post(
@@ -20,8 +21,9 @@ function Login(){
                     "email":email,
                     "password":password
                 }
-            ).then( function (res){
-                alert(JSON.stringify(res.data));
+            ).then((res)=>{
+                setUserid(res.data)
+                props.updateUserId(res.data)
             }).catch(function (error) {
                 console.log(error)
             });
@@ -30,9 +32,12 @@ function Login(){
 
     return (
             <Container className={'border'} style={{maxWidth:"600px", padding:"2%"}} fluid={"sm"}>
+
+
+
+
                 <Form onSubmit={handleSubmit} className={'rounded'} fluid>
                      <Form.Group  className="mb-3" controlId="email">
-
                          <Form.Label>Email address</Form.Label>
                          <Form.Control name={'email'}
                                        onChange={(e)=>{setEmail(e.target.value)}}

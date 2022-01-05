@@ -9,10 +9,6 @@ import Fuse from "fuse.js";
 import {ObjectId} from "mongodb";
 const app = express();
 
-const fuse = new Fuse(books, options,index)
-
-console.log(result)
-
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
@@ -75,10 +71,15 @@ app.post("/login", async (req, res) => {
         return(auth_value)
     }
     req.body.password = bcrypt.hashSync(req.body.password)
-    if (await authenticate(req.body)){
-    } else{
-        console.log(req.body)
-    }
+    console.log(req.body)
+    let user_id = await User.findOne(
+        {email:req.body.email},
+        '_id',
+        )
+    user_id = user_id._id.toString()
+    console.log(user_id)
+    res.send(user_id)
+
 });
 
 export default app ;

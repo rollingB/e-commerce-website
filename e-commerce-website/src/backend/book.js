@@ -22,7 +22,8 @@ const bookschema = mongoose.Schema({
     isbn13 : String,
     description : String,
     genres : Array,
-    tags : Array
+    tags : Array,
+    price: Number
 }
 )
 
@@ -53,5 +54,21 @@ async function removefields(){
     })
     }
 
+async function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
+async function addprice(){
+   Book.find({},
+         (err,docs)=>{
+        docs.forEach(async (doc)=>{
+            doc.price = await getRandomInt(300,1000)
+            doc.save()
+        })
+    }
+    )
+}
+addprice()
 export default Book
