@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
-import {makeconnection} from "./connect.js";
+import makeconnection from "./connect.js";
+import {ObjectId} from "mongodb";
 
 const bookschema = mongoose.Schema({
-    _id : Object,
+    _id : {type:ObjectId,},
     title : String,
     cover_link : String,
     author : String,
@@ -26,6 +27,7 @@ const bookschema = mongoose.Schema({
     price: Number
 }
 )
+
 
 const Book = new mongoose.model("Book",bookschema,'books')
 
@@ -70,5 +72,31 @@ async function addprice(){
     }
     )
 }
-addprice()
+
+async function fillnulls(){
+    Book.find({isbn:null,isbn13:null},(err,docs)=>{
+        docs.forEach(async (doc) => {
+            doc.isbn = doc.isbn13 = undefined
+            await doc.save()
+        })
+        console.log(docs)
+    }).then(
+    Book.find({isbn:null},(err,docs)=>{
+        docs.forEach(async (doc) => {
+            doc.isbn = undefined
+        })
+        console.log(docs)
+    })
+    ).then(
+    Book.find({isbn13:null},(err,docs)=>{
+        docs.forEach(async (doc) => {
+            doc.isbn13 = undefined
+            await doc.save()
+        })
+        console.log(docs)
+    })
+        )
+}
+
+
 export default Book

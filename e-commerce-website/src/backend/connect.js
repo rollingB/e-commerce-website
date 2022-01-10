@@ -17,15 +17,8 @@ async function makeconnection() {
         })
 };
 
-makeconnection()
 
-
-
-export {makeconnection}
-
-
-
-
+export default makeconnection;
 
 
 

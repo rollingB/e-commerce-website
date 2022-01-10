@@ -2,6 +2,26 @@ import mongoose from "mongoose";
 import isEmail from 'validator/lib/isEmail.js';
 
 
+const cartschema = new mongoose.Schema(
+    {
+        book:{
+        required:true,
+        type: String,
+        index:true
+        },
+
+        cover_link: String,
+
+        count:{
+        required:true,
+        type:Number,
+        default: 1
+        },
+        price: Number,
+    },
+    {autoIndex:false}
+)
+
 const userSchema = new mongoose.Schema(
     {
         email: {
@@ -25,16 +45,16 @@ const userSchema = new mongoose.Schema(
             type: String,
         },
         wishlist:{
-            required: false,
-            type: Array
+           type:[cartschema],
+            default:[]
         },
         cart:{
-            required: false,
-            type: Array
+            type:[cartschema],
+            default:[]
         },
-        orders:{
-            required:false,
-            type: Array
+        orders: {
+            type:Array,
+            default:[]
         }
 
     },
@@ -44,6 +64,7 @@ const userSchema = new mongoose.Schema(
 );
 
 const User = mongoose.model("users", userSchema);
+
 
 
 export default User

@@ -1,18 +1,9 @@
-import {makeconnection} from "./connect.js";
-import Book from "./book.js";
-import Fuse from "fuse.js";
-import {useCallback} from "react";
+import makeconnection from "./connect.js";
+import User from "./user.js";
+import Book from "./book.js"
+import * as fs from "fs";
+await makeconnection()
 
 
 
-async function test(){
-    const books = await Book.find({}).limit(1000).lean()
-    const options = {keys: ["author", "title", "isbn", "isbn13", "genres"]}
-    const index = Fuse.createIndex(options.keys,books)
-    const fuse = new Fuse(books, options,index)
-    const result = fuse.search("Inner Circle")
-}
-
-
-
-test()
+console.log(new Date(Date.parse('2022-01-06T05:26:12.586Z')).toLocaleString())

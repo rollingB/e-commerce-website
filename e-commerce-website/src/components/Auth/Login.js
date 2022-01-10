@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import bcrypt from "bcryptjs";
 import {Form, Button, Container, Col, Row} from "react-bootstrap";
-import AddToCart from "./AddToCart";
+import AddToCart from "../Purchase/AddToCart";
 
 const UserContext = React.createContext('')
 
@@ -11,7 +11,7 @@ function Login(props){
     const[email,setEmail] = useState('')
     const[password,setPassword]=useState('');
     const[userid,setUserid]=useState('')
-
+    const[variant,setVariant]=useState('')
 
 
     function handleSubmit(e) {
@@ -31,11 +31,7 @@ function Login(props){
     }
 
     return (
-            <Container className={'border'} style={{maxWidth:"600px", padding:"2%"}} fluid={"sm"}>
-
-
-
-
+            <Container className={'border'} style={{maxWidth:"600px", padding:"2%",marginTop:"10%"}} fluid={"sm"}>
                 <Form onSubmit={handleSubmit} className={'rounded'} fluid>
                      <Form.Group  className="mb-3" controlId="email">
                          <Form.Label>Email address</Form.Label>

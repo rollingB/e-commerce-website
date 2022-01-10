@@ -4,9 +4,9 @@ import axios from "axios";
 
 function AddToCart(props){
     function Add(){
-        axios.get(`\add_to_cart\${props}`)}
+        axios.get(`/addtocart/${props.userId}/${props.bookId}`)}
     return(
-        <Button variant={'dark'}> {props.userid} {props.bookid} </Button>
+        <Button style={{margin:'1px', width:'30%'}} variant={'dark'} onClick={()=>Add()}> Add to Cart </Button>
     )
 }
 

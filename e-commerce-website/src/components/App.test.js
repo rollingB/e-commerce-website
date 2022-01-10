@@ -1,5 +1,5 @@
 mport { render, screen } from '@testing-library/react';
-import Signup_component from './Signup';
+import Signup_component from './Auth/Signup';
 
 test('renders learn react link', () => {
   render(<Signup_component />);

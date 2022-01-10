@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './components/index.css';
 import reportWebVitals from './reportWebVitals';
-import {CatalogueBlock} from "./components/Catalogue_Block";
+import {CatalogueBlock} from "./components/Viewer/Catalogue_Block";
 import {BrowserRouter, Router} from "react-router-dom";
 import App from './components/App'
 

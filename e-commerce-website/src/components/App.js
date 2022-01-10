@@ -1,17 +1,17 @@
 import logo from '../logo.svg';
-import UserContext from "./User_Context";
+import {SearchContext, UserContext} from "./Contexts";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React  from "react";
-import {CatalogueBlock} from "./Catalogue_Block";
+import Profile_Page from "./Profile_Page/Profile_Page";
 import {BrowserRouter, Route, Routes, useParams} from "react-router-dom";
-import Login from "./Login";
-import Product_Page from "./Product_Page";
+import Login from "./Auth/Login";
+import Product_Page from "./Viewer/Product_Page";
 import {Card, Container, Image, Navbar, NavbarBrand} from "react-bootstrap";
-import Navigation from "./Navigation";
-import Catalogue from "./Catalogue";
-import * as url from "url";
-import Signup from "./Signup";
-import AddToCart from "./AddToCart";
+import Navigation from "./Viewer/Navigation";
+import Catalogue from "./Viewer/Catalogue";
+import View_Cart from "./Purchase/View_Cart";
+import Signup from "./Auth/Signup";
+
 
 
 
@@ -19,35 +19,47 @@ const doc = {"_id":{"$oid":"618c360a73975dfa37fef4e9"},"title":"Inner Circle","c
 
 
 
+
 class App extends React.Component{
     constructor(props) {
         super(props);
-
         this.state={
-            userId:'Nothing',
+            userId: localStorage.getItem('userId'),
+            searchQuery: 'Hello'
         }
         this.updateUserId = this.updateUserId.bind(this)
+        this.getSearchQuery = this.getSearchQuery.bind(this)
     }
 
     updateUserId(update){
-        this.setState({userId:update})
+        localStorage.setItem('userId',update)
     }
 
+    getSearchQuery(newSearchQuery){
+        this.setState({searchQuery:newSearchQuery})
+    }
 
     render() {
+
         return(
             <BrowserRouter>
                 <UserContext.Provider value={this.state.userId}>
-                <Navigation />
-                    <h1>{this.state.userId}</h1>
+                <SearchContext.Provider value={{
+                    searchTerm: this.state.searchQuery,
+                    updateSearchTerm:this.getSearchQuery
+                }}>
+                <Navigation userId={this.state.userId} />
                 <Routes>
-                    <Route path = '/' element={<Catalogue/>}/>
-                    <Route path = '/login' element={<Login updateUserId={this.updateUserId}/>}/>
-                    <Route path = '/books/:book_id' element={<Product_Page/>}/>
-                    <Route path = '/search/:searchParams' element={<searchParams/>}/>
-                    <Route path = '/signup' element={<Signup/>}/>
-                    <Route path = '/test' element={<AddToCart/>}/>
+                    <Route path = {'/login'} element={<Login updateUserId={this.updateUserId}/>}/>
+                    <Route path = {'/books/:book_id'} element={<Product_Page userId={this.state.userId}/>}/>
+                    <Route path = {'/'} element={<Catalogue searchQuery={this.state.searchQuery}/>}/>
+                    <Route path = {'/signup'} element={<Signup/>}/>
+                    <Route path = {`/cart`} element={ this.state.userId===null? <Login/>
+                                                        :<View_Cart userId={this.state.userId}/>}/>
+                    <Route path = {'/profile'} element={this.state.userId===null? <Login/>
+                        :<Profile_Page userId={this.state.userId}/>}/>
                 </Routes>
+                </SearchContext.Provider>
                 </UserContext.Provider>
             </BrowserRouter>
         )
